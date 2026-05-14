@@ -95,3 +95,19 @@ To quickly log system info, run: `neofetch`
 2. **Bettercap:**   
 Installed this while following a tutorial. I’ll test it in the future. 
 It’s for network/security testing (MITM, Wi-Fi, packets, etc).
+
+# Quick APK Sideload Guide
+
+1. **Move the APK** to the **Linux files** folder.
+2. **Open Terminal** and connect:
+`adb connect arc`
+3. **Install the app**:
+`adb -s arc install 'filename.apk'`
+
+---
+
+### Pro Tips
+
+* **Update Apps:** To update an existing app without uninstalling, use:
+`adb -s arc install -r 'filename.apk'`
+* **Clean Up:** If you get a "device offline" error, run `adb kill-server` then start over from step 2.
