@@ -21,9 +21,40 @@ PowerShell: `ls` / `dir` / `gci`  <br>
 
 ## show file content
 
-Linux: `cat`  <br>
+Linux: `cat`  — dumps the whole file to screen at once  <br>
+Linux: `less` — pager, view the file without loading it all into memory (scrollable, searchable)  <br>
 CMD: `type`  <br>
 PowerShell: `cat` / `gc`  <br>
+
+### `less`
+
+Pager for viewing files without loading the whole thing into memory.
+
+**To Open:** `less file.txt`
+
+**To Navigate:**
+- `Space` or `f` — go forward one page
+- `b` — go back one page
+- `↓` or `j` — move down one line
+- `↑` or `k` — move up one line
+- `g` — jump to start of file
+- `G` — jump to end of file
+- `q` — close less
+
+**To Search:**
+- `/word` then Enter — finds "word" below your current position, moves you down to it
+- `?word` then Enter — finds "word" above your current position, moves you up to it
+- `n` — next match, same direction
+- `N` — next match, opposite direction
+
+**Other:**
+- `less +F file` — opens in "follow mode" (like `tail -f`): instead of you scrolling, it auto-scrolls as new lines get appended to the file. Good for watching a live log update in real time. `Ctrl+C` to stop following (back to normal scrolling), `q` to quit.
+  - `tail -f file.log` — shows the last few lines of a file, then keeps watching and prints new lines as they're added, live. `Ctrl+C` to stop.
+- `command | less` — send another command's output into less to scroll it. `|` is a pipe: it connects one command's output to another command's input, instead of printing straight to the terminal.
+  - `ls -l | less` — list files, scroll through them instead of a long dump
+  - `history | less` — scroll through your command history
+- `h` — shows all keyboard shortcuts inside less
+- `~/.lesshst` — stores your search history so it's there next time; not important, skip backing it up
 
 ## create folder
 
@@ -89,8 +120,8 @@ comm -23 <(apt-mark showmanual | sort) <(gzip -dc /var/log/installer/manifest.gz
 To quickly log system info, run: `neofetch`
 
 2. **Bettercap:**   
-Installed this while following a tutorial. I’ll test it in the future. 
-It’s for network/security testing (MITM, Wi-Fi, packets, etc).
+Installed this while following a tutorial. I'll test it in the future. 
+It's for network/security testing (MITM, Wi-Fi, packets, etc).
 
 <br>
 
