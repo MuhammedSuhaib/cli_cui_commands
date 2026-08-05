@@ -243,6 +243,11 @@ sudo apt install -y ./vscode-old.deb
 rm vscode-old.deb
 echo ">>> Select NO on the Microsoft repo popup if it appears <<<"
 
+echo "=== Enabling 'Open with VS Code' in context menu ==="
+sudo sed -i 's|MimeType=application/x-code-workspace;|MimeType=text/plain;inode/directory;application/x-code-workspace;|' /usr/share/applications/code.desktop
+sudo update-desktop-database
+echo ">>> Restart Chromebook once, then right-click in Files app → Open with → Code <<<"
+
 echo "=== Installing Node.js ==="
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
@@ -266,12 +271,22 @@ systemctl --user stop openclaw
 systemctl --user disable openclaw
 
 echo "=== Done ==="
-echo "Restart your terminal, then:"
-echo "  cat vscode-extensions.txt | xargs -L 1 code --install-extension"
 echo ""
-echo "Add to .bashrc / .zshrc:"
-echo "  export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring"
-echo "  export NO_UPDATE_NOTIFIER=1"
+echo "========== MANUAL STEPS LEFT =========="
 echo ""
-echo "Also set VS Code Update: Mode to none (Ctrl+, → search update mode)"
+echo "1. Stop VS Code auto-updating:"
+echo "   - Open VS Code"
+echo "   - Press Ctrl+,  (opens Settings)"
+echo "   - Search for: update mode"
+echo "   - Set 'Update: Mode' to: none"
+echo ""
+echo "2. Restart your terminal, then reinstall extensions:"
+echo "   cat vscode-extensions.txt | xargs -L 1 code --install-extension"
+echo ""
+echo "3. Add these lines to .bashrc or .zshrc:"
+echo "   export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring"
+echo "   export NO_UPDATE_NOTIFIER=1"
+echo ""
+echo "4. Restart Chromebook once (for context menu fix to take effect)"
+echo "========================================"
 ```
