@@ -220,3 +220,58 @@ Check status / resource usage:
 ```bash
 systemctl --user status openclaw
 ```
+
+---
+
+## One-Go Setup Script (Copy & Paste)
+
+Uses **VS Code 1.85.2 (Nov 2023)** and **permanently disables** the OpenClaw daemon.
+
+```bash
+#!/bin/bash
+set -e
+
+echo "=== Updating system ==="
+sudo apt update && sudo apt upgrade -y
+
+echo "=== Installing base tools ==="
+sudo apt install -y git
+
+echo "=== Installing VS Code 1.85.2 (Nov 2023) - copilot bloatless ==="
+wget -O vscode-old.deb "https://update.code.visualstudio.com/1.85.2/linux-deb-x64/stable"
+sudo apt install -y ./vscode-old.deb
+rm vscode-old.deb
+echo ">>> Select NO on the Microsoft repo popup if it appears <<<"
+
+echo "=== Installing Node.js ==="
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs
+
+echo "=== Installing pnpm ==="
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+echo "=== Installing uv (Python) ==="
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+echo "=== Installing Antigravity CLI ==="
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+
+echo "=== Installing OpenClaw ==="
+pnpm add -g openclaw@latest
+pnpm approve-builds -g
+openclaw onboard --install-daemon
+
+echo "=== Permanently disabling OpenClaw daemon ==="
+systemctl --user stop openclaw
+systemctl --user disable openclaw
+
+echo "=== Done ==="
+echo "Restart your terminal, then:"
+echo "  cat vscode-extensions.txt | xargs -L 1 code --install-extension"
+echo ""
+echo "Add to .bashrc / .zshrc:"
+echo "  export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring"
+echo "  export NO_UPDATE_NOTIFIER=1"
+echo ""
+echo "Also set VS Code Update: Mode to none (Ctrl+, → search update mode)"
+```
