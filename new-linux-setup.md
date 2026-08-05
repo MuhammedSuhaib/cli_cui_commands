@@ -167,18 +167,17 @@ pnpm blocks package build/install scripts by default (security).
 
 ## 11. Final Steps
 
-Restart your terminal, then reinstall VS Code extensions:
-
-```bash
-cat vscode-extensions.txt | xargs -L 1 code --install-extension
-```
-
 Add these to your `.bashrc` or `.zshrc`:
 
 ```bash
 export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 export NO_UPDATE_NOTIFIER=1
 ```
+
+**Why these exports?**
+
+- `PYTHON_KEYRING_BACKEND=...null.Keyring` — disables the system keyring. Without it, Python tools (uv, pip, etc.) try to use the desktop keyring on ChromeOS/Linux, which often fails or pops annoying password prompts.
+- `NO_UPDATE_NOTIFIER=1` — stops npm/pnpm from showing constant “new version available” update notifications in the terminal.
 
 ---
 
@@ -280,13 +279,10 @@ echo "   - Press Ctrl+,  (opens Settings)"
 echo "   - Search for: update mode"
 echo "   - Set 'Update: Mode' to: none"
 echo ""
-echo "2. Restart your terminal, then reinstall extensions:"
-echo "   cat vscode-extensions.txt | xargs -L 1 code --install-extension"
-echo ""
-echo "3. Add these lines to .bashrc or .zshrc:"
+echo "2. Add these lines to .bashrc or .zshrc:"
 echo "   export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring"
 echo "   export NO_UPDATE_NOTIFIER=1"
 echo ""
-echo "4. Restart Chromebook once (for context menu fix to take effect)"
+echo "3. Restart Chromebook once (for context menu fix to take effect)"
 echo "========================================"
 ```
