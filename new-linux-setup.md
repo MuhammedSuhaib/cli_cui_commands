@@ -269,6 +269,12 @@ echo "=== Permanently disabling OpenClaw daemon ==="
 systemctl --user stop openclaw
 systemctl --user disable openclaw
 
+echo "=== Disabling system keyring (avoids password prompts from Python tools on ChromeOS) ==="
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+echo "=== Disabling npm/pnpm update notifier (stops constant version popups in terminal) ==="
+export NO_UPDATE_NOTIFIER=1
+
 echo "=== Done ==="
 echo ""
 echo "========== MANUAL STEPS LEFT =========="
@@ -279,10 +285,6 @@ echo "   - Press Ctrl+,  (opens Settings)"
 echo "   - Search for: update mode"
 echo "   - Set 'Update: Mode' to: none"
 echo ""
-echo "2. Add these lines to .bashrc or .zshrc:"
-echo "   export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring"
-echo "   export NO_UPDATE_NOTIFIER=1"
-echo ""
-echo "3. Restart Chromebook once (for context menu fix to take effect)"
+echo "2. Restart Chromebook once (for context menu fix to take effect)"
 echo "========================================"
 ```
