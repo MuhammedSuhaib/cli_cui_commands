@@ -248,3 +248,15 @@ All of `~/.local` is installed-tool infrastructure, not project data. Here's the
 * **Update Apps:** To update an existing app without uninstalling, use:
 `adb -s arc install -r 'filename.apk'`
 * **Clean Up:** If you get a "device offline" error, run `adb kill-server` then start over from step 2.
+
+
+
+## Mute a video (remove audio) without re-encoding:
+
+```
+ffmpeg -i input.mp4 -c copy -an output.mp4
+```
+- `-i input.mp4` → input file
+- `-c copy` → copy video/audio streams as-is, no re-encoding (fast, no quality loss)
+- `-an` → drop audio (mutes it)
+- `output.mp4` → output file
